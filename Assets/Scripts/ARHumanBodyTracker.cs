@@ -48,15 +48,17 @@ public class ARHumanBodyTracker : MonoBehaviour
             {
                 humanBoneController.ApplyBodyPose(bodyPart, Vector3.zero);
             }
-
-            ApplyClothing();
         }
 
+        foreach(var bodyPart in eventArgs.removed)
+        {
+            if (skeletonTracker.TryGetValue(bodyPart.trackableId, out humanBoneController))
+            {
+                Destroy(humanBoneController.gameObject);
+                skeletonTracker.Remove(bodyPart.trackableId);
+            }
 
-    }
-
-    private void ApplyClothing()
-    {
+        }
 
 
     }
